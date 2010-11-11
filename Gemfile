@@ -16,6 +16,7 @@ gem "RedCloth"
 # Bundle gems needed for Mongoid
 gem "mongoid", "2.0.0.beta.19"
 gem "bson_ext", "1.1.2"
+gem "mongoid_grid"
 
 # Auth
 gem "omniauth"

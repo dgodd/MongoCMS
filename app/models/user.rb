@@ -9,5 +9,8 @@ class User
   def to_s
     name || email || "ID:#{id}"
   end
+  def admin?
+    true
+  end
 end
 
