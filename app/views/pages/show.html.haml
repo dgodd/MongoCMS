@@ -1,0 +1,11 @@
+%p#notice= notice
+%div
+  = link_to 'Back', site_pages_path(@site)
+  \|
+
+  = link_to 'Edit', edit_site_page_path(@site,@page)
+
+%h1= @page.title
+
+%div= @page.body_html
+

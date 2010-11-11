@@ -1,0 +1,22 @@
+%h1 Listing sites
+
+%p
+  User:
+  = current_user
+
+%p= link_to 'New Site', new_site_path
+
+%table
+  %tr
+    %th
+    %th
+    %th
+
+  - @sites.each do |site|
+    %tr
+      %td= site.name
+      %td= site.domains.join('<br>')
+      %td= link_to 'Show', site
+      %td= link_to 'Edit', edit_site_path(site)
+      %td= link_to 'Destroy', site, :confirm => 'Are you sure?', :method => :delete
+
