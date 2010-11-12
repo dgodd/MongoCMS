@@ -1,7 +1,13 @@
-%h1 Editing site
+%h1 Site
 
-= render 'form'
+%div
+  = link_to 'Show', @site
+  \|
+  = link_to 'Back', sites_path
 
-= link_to 'Show', @site
-\|
-= link_to 'Back', sites_path
+= semantic_form_for @site do |f|
+  = f.inputs do
+    = f.input :name
+    = f.input :domains_txt
+    = f.input :layout, :as=>:text
+  = f.buttons

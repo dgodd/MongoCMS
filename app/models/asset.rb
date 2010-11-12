@@ -1,5 +1,7 @@
+require 'mime/types'
 class Asset
   include Mongoid::Document
+  include Mongoid::Timestamps
   field :oid #, :type=>BSON::ObjectID
   field :filename
   # embedded_in :site, :inverse_of=>:assets
