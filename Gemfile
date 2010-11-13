@@ -13,6 +13,7 @@ gem "ruby_parser", "2.0.5", :group => :development
 gem "jquery-rails", "0.2.4"
 gem "RedCloth"
 gem "formtastic"
+gem "liquid"
 
 # Bundle gems needed for Mongoid
 gem "mongoid", "2.0.0.beta.19"

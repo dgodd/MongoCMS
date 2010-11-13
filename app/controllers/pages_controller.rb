@@ -11,7 +11,13 @@ class PagesController < ApplicationController
     
   def show  
     @page = Page.find(params[:id])  
-    respond_with @page  
+
+    ## FIXME ; first assumes html layout
+    if @page.site && @page.site.layout.present? then
+      render :text=>@page.to_html(true)
+    else
+      respond_with @page  
+    end
   end  
   
   def new  
