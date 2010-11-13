@@ -3,8 +3,10 @@ class PagesController < ApplicationController
   load_and_authorize_resource
     
   def index  
-    @pages = Page.all  
-    respond_with @pages  
+    @pages = Page
+    @pages = @pages.where(:site_id=>params[:site_id]) if params[:site_id]
+    @pages = @pages.all
+    respond_with @pages
   end  
     
   def show  

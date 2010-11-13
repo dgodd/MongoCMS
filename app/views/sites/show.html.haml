@@ -4,3 +4,11 @@
 = link_to 'Edit', edit_site_path(@site)
 \|
 = link_to 'Back', sites_path
+
+%h1= @site
+
+%h2 Pages
+%ul
+  - @site.pages do  |p|
+    = link_to p, [:edit,p]
+  = link_to 'New', new_page_path(:site_id=>@site)

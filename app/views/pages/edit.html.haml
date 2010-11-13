@@ -1,7 +1,11 @@
-%h1 Editing page
+%h1= @page.site
 
-= render 'form'
+%div
+  = link_to 'Show', @page
 
-= link_to 'Show', site_page_path(@site, @page)
-\|
-= link_to 'Back', site_pages_path(@site)
+= semantic_form_for @page do |f|
+  = f.inputs do
+    = f.input :site_id
+    = f.input :title
+    = f.input :body, :as=>:text
+  = f.buttons
