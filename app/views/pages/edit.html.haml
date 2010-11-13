@@ -18,6 +18,5 @@
           %p Please enable JavaScript to use file uploader.
 
       - @page.assets.each do |a|
-        %li
-          = a
-          = image_tag("/gridfs/#{a.oid}", :width=>100)
+        %div
+          = image_tag("/gridfs/#{a.oid}", :width=>100, 'data-textile'=>"!/gridfs/#{a.oid}(#{a.filename})!")

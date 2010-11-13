@@ -27,6 +27,6 @@ class Page
     end
   end
   def layout
-    "<h1>{{page.title}}</h1><div>{{page.body_html}}</div>"
+    "<h1>{{page.title}}</h1><div>{{page.body}}</div>"
   end
 end
