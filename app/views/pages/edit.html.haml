@@ -3,9 +3,21 @@
 %div
   = link_to 'Show', @page
 
-= semantic_form_for @page do |f|
-  = f.inputs do
-    = f.input :site_id
-    = f.input :title
-    = f.input :body, :as=>:text
-  = f.buttons
+%table
+  %tr
+    %td
+      = semantic_form_for @page do |f|
+        = f.inputs do
+          = f.input :site_id
+          = f.input :title
+          = f.input :body, :as=>:text
+        = f.buttons
+    %td#dropzone
+      %div#file-uploader
+        %noscript
+          %p Please enable JavaScript to use file uploader.
+
+      - @page.assets.each do |a|
+        %li
+          = a
+          = image_tag("/gridfs/#{a.oid}", :width=>100)

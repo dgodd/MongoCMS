@@ -11,5 +11,15 @@ class Asset
   def grid
     @grid ||= Mongo::Grid.new(Mongoid.database)
   end
+  def file=(f)
+    #self.oid ||= BSON::ObjectID.new()
+    g = grid.put(
+      f.read,
+      :filename => filename,
+      #:content_type => attributes["#{name}_type"],
+      #:_id => oid
+    )
+    self.oid = g
+  end
 end
 

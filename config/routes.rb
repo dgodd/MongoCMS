@@ -1,5 +1,10 @@
 MongoCMS::Application.routes.draw do
-  resources :sites, :pages
+  resources :sites
+  resources :pages do
+    member do
+      post :add_asset
+    end
+  end
 
   match 'auth/:provider/callback' => 'admin#callback'
 

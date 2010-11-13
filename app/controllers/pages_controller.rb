@@ -46,6 +46,19 @@ class PagesController < ApplicationController
     end  
     respond_with(@page)  
   end  
+
+  def add_asset
+    @page = Page.find(params[:id])
+    a = Asset.new(:filename=>params[:qqfile])
+    f = request.env['rack.input']
+    f.rewind
+    a.file = f
+    @page.assets << a
+    @page.save
+    # logger.warn request.env
+    ## https://github.com/valums/file-uploader/blob/master/server/perl.cgi
+    render :text=>'{ "success": true }'
+  end
     
   def destroy  
     @page = Page.find(params[:id])  
