@@ -1,6 +1,6 @@
 class PagesController < ApplicationController  
   respond_to :html, :xml, :json  
-  load_and_authorize_resource
+  load_and_authorize_resource :except=>[:root]
     
   def index  
     @pages = Page
@@ -10,7 +10,7 @@ class PagesController < ApplicationController
   end  
     
   def show  
-    @page = Page.find(params[:id])  
+    @page ||= Page.find(params[:id])  
 
     ## FIXME ; first assumes html layout
     if @page.site && @page.site.layout.present? then
@@ -19,6 +19,10 @@ class PagesController < ApplicationController
       respond_with @page  
     end
   end  
+  def root
+    @page = Page.where(:site_id=>current_site.id).first
+    show
+  end
   
   def new  
     @page = Page.new  

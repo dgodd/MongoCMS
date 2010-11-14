@@ -7,6 +7,7 @@ MongoCMS::Application.routes.draw do
   end
 
   match 'auth/:provider/callback' => 'admin#callback'
+  root :to => "pages#root"
 
   # The priority is based upon order of creation:
   # first created -> highest priority.

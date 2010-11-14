@@ -1,6 +1,6 @@
 class ApplicationController < ActionController::Base
   protect_from_forgery
-  helper_method :current_user, :signed_in?
+  helper_method :current_user, :signed_in?, :current_site
 
   rescue_from CanCan::AccessDenied do |exception|
     flash[:alert] = exception.message
@@ -17,5 +17,8 @@ class ApplicationController < ActionController::Base
   def current_user=(user)
     @current_user = user
     session[:user_id] = user.id
+  end
+  def current_site
+    @current_site ||= Site.where(:domains=>request.host).first
   end
 end
