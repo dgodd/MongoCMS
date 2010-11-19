@@ -6,6 +6,7 @@ MongoCMS::Application.routes.draw do
     end
   end
 
+  match 'admin' => 'admin#index'
   match 'auth/:provider/callback' => 'admin#callback'
   root :to => "pages#root"
 

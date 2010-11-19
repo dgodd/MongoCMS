@@ -1,6 +1,6 @@
 class AdminController < ApplicationController
 	def index
-		redirect_to '/auth/facebook'
+		redirect_to sites_path if signed_in?
 	end
 	def callback
 		auth = request.env['omniauth.auth']  
@@ -8,9 +8,10 @@ class AdminController < ApplicationController
 		@user.name = auth['user_info']['name'] rescue 1
 		@user.email = auth['extra']['user_hash']['email'] rescue 1
 		@user.save
-		current_user = @user
+		self.current_user = @user
 		
 		# render :text=>auth.to_yaml
-  		render :text=>"Hello, #{@user.name}"
+  		# render :text=>"Hello, #{@user.name}"
+		redirect_to sites_path
 	end
 end

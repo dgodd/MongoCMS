@@ -8,7 +8,7 @@
     %td
       = semantic_form_for @page do |f|
         = f.inputs do
-          = f.input :site_id
+          = f.hidden_field :site_id
           = f.input :title
           = f.input :body, :as=>:text
         = f.buttons

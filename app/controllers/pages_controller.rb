@@ -14,7 +14,7 @@ class PagesController < ApplicationController
 
     ## FIXME ; first assumes html layout
     if @page.site && @page.site.layout.present? then
-      render :text=>@page.to_html(true)
+      render :text=>"<div>User: #{current_user}</div>"+@page.to_html(true)
     else
       respond_with @page  
     end
@@ -25,7 +25,7 @@ class PagesController < ApplicationController
   end
   
   def new  
-    @page = Page.new  
+    @page = Page.new(params[:page])
     respond_with @page  
   end  
     
@@ -35,7 +35,7 @@ class PagesController < ApplicationController
       #cookies[:last_page_id] = @page.id  
       flash[:notice] = "Successfully created page."  
     end  
-    respond_with(@page)  
+    respond_with(@page, :location=>edit_page_path(@page))  
   end  
   
   def edit  
@@ -48,7 +48,7 @@ class PagesController < ApplicationController
     if @page.update_attributes(params[:page])  
       flash[:notice] = "Successfully updated page."  
     end  
-    respond_with(@page)  
+    respond_with(@page, :location=>edit_page_path(@page))  
   end  
 
   def add_asset

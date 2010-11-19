@@ -9,6 +9,6 @@
 
 %h2 Pages
 %ul
-  - @site.pages do  |p|
-    = link_to p, [:edit,p]
-  = link_to 'New', new_page_path(:site_id=>@site)
+  - @site.pages.each do  |p|
+    %li= link_to p, [:edit,p]
+  %li= link_to 'New Page', new_page_path(:page=>{:site_id=>@site})

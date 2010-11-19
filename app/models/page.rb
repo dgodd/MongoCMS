@@ -7,7 +7,7 @@ class Page
   referenced_in :site
 
   def to_s
-    title
+    title? ? title : '(unknown)'
   end
   def body_html
     RedCloth.new(body).to_html.html_safe
