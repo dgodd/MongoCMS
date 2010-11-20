@@ -4,7 +4,8 @@ class Asset
   include Mongoid::Timestamps
   field :oid #, :type=>BSON::ObjectID
   field :filename
-  # embedded_in :site, :inverse_of=>:assets
+  field :content_type
+  embedded_in :site, :inverse_of=>:assets
   embedded_in :page, :inverse_of=>:assets
 
   # Accessor to GridFS
@@ -16,7 +17,7 @@ class Asset
     g = grid.put(
       f.read,
       :filename => filename,
-      #:content_type => attributes["#{name}_type"],
+      :content_type => content_type
       #:_id => oid
     )
     self.oid = g

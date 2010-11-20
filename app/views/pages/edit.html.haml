@@ -1,6 +1,5 @@
 %div.ui-layout-center.ui-widget-content.add-padding.grey.add-scrollbar
-  %h1= @page.site
-  %div
+  %div{:style=>'text-align:right'}
     = link_to 'Show', @page, :target=>'_blank'
   
   = semantic_form_for @page do |f|

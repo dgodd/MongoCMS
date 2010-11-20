@@ -14,7 +14,7 @@ class PagesController < ApplicationController
 
     ## FIXME ; first assumes html layout
     if @page.site && @page.site.layout.present? then
-      render :text=>"<div>User: #{current_user}</div>"+@page.to_html(true)
+      render :text=>@page.to_html(true)
     else
       respond_with @page  
     end

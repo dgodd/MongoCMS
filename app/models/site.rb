@@ -5,7 +5,7 @@ class Site
   field :admins, :type=>Array
   field :layout
   references_many :pages, :inverse_of=>:site
-  # embeds_many :assets
+  embeds_many :assets
 
   def to_s
     name

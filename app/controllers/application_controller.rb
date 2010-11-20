@@ -16,7 +16,7 @@ class ApplicationController < ActionController::Base
   end
   def current_user=(user)
     @current_user = user
-    session[:user_id] = user.id
+    session[:user_id] = user ? user.id : nil
   end
   def current_site
     @current_site ||= Site.where(:domains=>request.host).first

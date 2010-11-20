@@ -2,6 +2,10 @@ class AdminController < ApplicationController
 	def index
 		redirect_to sites_path if signed_in?
 	end
+	def logout
+		self.current_user = nil
+		redirect_to '/admin'
+	end
 	def callback
 		auth = request.env['omniauth.auth']  
 		@user = User.find_or_create_by(:provider=>auth['provider'], :uid=>auth['uid'])

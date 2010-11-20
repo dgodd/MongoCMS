@@ -10,7 +10,7 @@ class Page
     title? ? title : '(unknown)'
   end
   def body_html
-    RedCloth.new(body).to_html.html_safe
+    body.html_safe
   end
   def to_drop
     pd = PageDrop.new

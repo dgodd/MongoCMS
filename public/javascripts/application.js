@@ -17,6 +17,9 @@ $(function() {
       $(this).focus();
     }
   }});
+  $('button.update').live('click', function() {
+    $(this.parentNode.parentNode).find('form:first').submit();
+  });
 });
 
 function insertAtCursor(myField, myValue) {
