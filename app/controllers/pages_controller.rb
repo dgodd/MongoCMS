@@ -12,7 +12,12 @@ class PagesController < ApplicationController
   def show  
     @page ||= Page.find(params[:id])  
 
-    ## FIXME ; first assumes html layout
+    if false && @page.site && dom=@page.site.domains.first then
+      unless request.host==dom || request.host=="www.#{dom}" then
+        redirect_to "http://www.#{dom}#{@page.to_url}" and return
+      end
+    end
+
     if @page.site && @page.site.layout.present? then
       session[:_csrf_token] ||= ActiveSupport::SecureRandom.base64(32) if @page.form
       render :text=>@page.to_html(true, flash[:notice], session[:_csrf_token])

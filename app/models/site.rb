@@ -15,4 +15,7 @@ class Site
   def to_liquid
     { 'name'=>name, 'domain'=>domains.first, 'pages'=>lambda { pages.order_by(:position.asc,:name.asc).collect { |p| { 'title'=>p.title, 'url'=>p.to_url } } } }
   end
+  def info_email
+    "info@#{domains.first}"
+  end
 end

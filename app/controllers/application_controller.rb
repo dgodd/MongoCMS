@@ -19,6 +19,6 @@ class ApplicationController < ActionController::Base
     session[:user_id] = user ? user.id : nil
   end
   def current_site
-    @current_site ||= Site.where(:domains=>request.host).first
+    @current_site ||= Site.where(:domains=>request.host.gsub(/^www\./,'')).first
   end
 end

@@ -5,6 +5,7 @@
   = semantic_form_for @page do |f|
     = f.inputs do
       = f.hidden_field :site_id
+      = f.input :published, :as=>:boolean
       = f.input :title
       = f.input :form_fields
       = f.input :body, :as=>:text

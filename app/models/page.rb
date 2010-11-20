@@ -1,7 +1,8 @@
 class Page
   include Mongoid::Document
   field :title
-  field :position
+  field :position, :type=>Integer
+  field :published, :type=>Boolean
   field :body
   embeds_many :assets
   embeds_one :form
