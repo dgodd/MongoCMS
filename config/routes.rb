@@ -8,6 +8,9 @@ MongoCMS::Application.routes.draw do
     member do
       post :add_asset
     end
+    collection do
+      post :positions
+    end
   end
   resources :contact, :only=>[:create]
 

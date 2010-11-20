@@ -3,7 +3,7 @@
 $(function() {
   $('div#accordion-west ul.sortable').sortable({
     update: function(event,ui) {
-      
+      $.post('/pages/positions', $(this).sortable('serialize'));
     }
   });
   $('div#accordion-west ul.sortable').disableSelection();

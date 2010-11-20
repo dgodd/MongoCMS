@@ -54,7 +54,7 @@ $(this).ckeditor({ 'width':$(this.parentNode).width() });
 <h3><a href="#">Pages</a></h3>
 <div style="overflow-x:hidden;"><ul class="sortable">
 <%- curr_site.pages.order_by(:position.asc,:name.asc).all.each do |p| -%>
-<li class="ui-state-default" data-oid="<%= p.id %>"><span class="ui-icon ui-icon-arrowthick-2-n-s"></span><%= link_to p, edit_page_path(p) %></li>
+<li class="ui-state-default" id="pages_<%= p.id %>"><span class="ui-icon ui-icon-arrowthick-2-n-s"></span><%= link_to p, edit_page_path(p) %></li>
 <%- end -%>
 <%= link_to 'New page', new_page_path(:page=>{:site_id=>curr_site}) %>
 </ul></div>

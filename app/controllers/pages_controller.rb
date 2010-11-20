@@ -69,6 +69,14 @@ class PagesController < ApplicationController
     ## https://github.com/valums/file-uploader/blob/master/server/perl.cgi
     render :text=>'{ "success": true }'
   end
+  def positions
+    params[:pages].each_with_index do |id,idx|
+      p = Page.find(id)
+      p.position = idx
+      p.save
+    end
+    render :text=>'OK'
+  end
     
   def destroy  
     @page = Page.find(params[:id])  
