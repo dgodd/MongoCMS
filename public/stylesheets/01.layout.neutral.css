@@ -1,0 +1,9 @@
+/* neutralize pane formatting BEFORE loading UI Theme */
+.ui-layout-pane ,
+.ui-layout-content {
+	background:	none;
+	border:		0;
+	padding:	0;
+	overflow:	visible;
+}
+

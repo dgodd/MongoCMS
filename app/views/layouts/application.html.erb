@@ -3,24 +3,67 @@
 <head>
   <title>MongoCMS</title>
   <%= stylesheet_link_tag :all %>
-  <%= javascript_include_tag :defaults, 'fileuploader' %>
+  <%= javascript_include_tag :defaults, 'fileuploader', 'jquery.layout.min-1.2.0' %>
 <script type="text/javascript" src="/ckeditor/ckeditor.js"></script>
 <script type="text/javascript" src="/ckeditor/adapters/jquery.js"></script>
-<script type="text/javascript"> $(function() { 
+<script type="text/javascript"> 
+	var pageLayout, centerTabsLayout, centerAccordionLayout; 
+$(function() { 
+		// OUTER/PAGE LAYOUT
+		pageLayout = $("body").layout({ 
+			west__size:200
+		,	east__size:200
+		,	south__initClosed:true
+		,	north__initClosed:true
+		,	west__onresize:	function () { $("#accordion-west").accordion("resize"); }
+		,	east__onresize:	function () { if ($("#tabs-east").tabs('option', 'selected') == 1) $("#accordion-east").accordion("resize"); }
+		}); 
+		$('body > div.ui-layout-center').layout({
+			east__size:130
+		});
+		$("div#accordion-west").accordion({ 'autoHeight':false, 'active':1 });
+
 $('label').each(function() {
 var lb = $(this);
 var f = lb.attr('for');
 var inp = $('input#'+f+', textarea#'+f);
 if(inp[0]) { inp.attr('placeholder', lb.text()); lb.hide(); }
 });
-$( 'textarea.editor, textarea#page_body' ).ckeditor();
- }); </script>
+$( 'textarea.editor, textarea#page_body' ).each(function() {
+$(this).ckeditor({ 'width':$(this.parentNode).width() });
+ });
+ });
+	</script> 
+    
   <%= csrf_meta_tag %>
-</head>
-<body>
-<div style="background:black;color:white;text-align:center;padding:4px;">User: <%= current_user %></div>
+</head> 
+<body> 
 
+
+<div class="ui-layout-north ui-widget-content add-padding">User: <%= current_user %></div>
+
+
+<div id="accordion-west" class="ui-layout-west no-scrollbar add-padding grey">
+<h3><a href="#">Sites</a></h3>
+<div>
+<%- Site.all.each do |s| -%>
+<%= link_to s, s %>
+<%- end -%>
+</div>
+<%- curr_site = @page ? @page.site : @site -%>
+<%- if curr_site -%>
+<h3><a href="#">Pages</a></h3>
+<div>
+<%- curr_site.pages.all.each do |p| -%>
+<%= link_to p, edit_page_path(p) %>
+<%- end -%>
+</div>
+<%- end -%>
+</div>
+
+<div id="tabs-center" class="ui-layout-center no-scrollbar grey no-padding">
 <%= yield %>
+</div>
 
-</body>
+</body> 
 </html>
