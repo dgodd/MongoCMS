@@ -22,7 +22,7 @@
     - @site.assets.each do |a|
       %div
         - if a.content_type.to_s=='text/css'
-          = link_to a.filename, "/gridfs/#{a.oid}"
+          = link_to a.filename, "/gridfs/#{a.oid}/#{a.filename}"
         - else
-          = image_tag("/gridfs/#{a.oid}", :width=>100, 'data-textile'=>"!/gridfs/#{a.oid}(#{a.filename})!")
+          = image_tag("/gridfs/#{a.oid}/#{a.filename}", :width=>100, 'data-textile'=>"!/gridfs/#{a.oid}(#{a.filename})!")
 

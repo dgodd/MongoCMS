@@ -23,7 +23,7 @@ class SitesController < ApplicationController
       #cookies[:last_site_id] = @site.id  
       flash[:notice] = "Successfully created site."  
     end  
-    respond_with(@site)  
+    respond_with(@site, :location=>edit_site_path(@site))  
   end  
   
   def edit  
@@ -36,7 +36,7 @@ class SitesController < ApplicationController
     if @site.update_attributes(params[:site])  
       flash[:notice] = "Successfully updated site."  
     end  
-    respond_with(@site)  
+    respond_with(@site, :location=>edit_site_path(@site))  
   end  
     
   def destroy  

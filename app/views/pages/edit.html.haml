@@ -20,5 +20,5 @@
   
     - @page.assets.each do |a|
       %div
-        = image_tag("/gridfs/#{a.oid}", :width=>100, 'data-textile'=>"!/gridfs/#{a.oid}(#{a.filename})!")
+        = image_tag("/gridfs/#{a.oid}/#{a.filename}", :width=>100, 'data-textile'=>"!/gridfs/#{a.oid}(#{a.filename})!")
 

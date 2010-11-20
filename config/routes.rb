@@ -5,6 +5,7 @@ MongoCMS::Application.routes.draw do
       post :add_asset
     end
   end
+  resources :contact, :only=>[:create]
 
   match 'admin' => 'admin#index'
   match 'admin/logout' => 'admin#logout'

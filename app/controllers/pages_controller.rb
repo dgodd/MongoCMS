@@ -14,7 +14,8 @@ class PagesController < ApplicationController
 
     ## FIXME ; first assumes html layout
     if @page.site && @page.site.layout.present? then
-      render :text=>@page.to_html(true)
+      session[:_csrf_token] ||= ActiveSupport::SecureRandom.base64(32) if @page.form
+      render :text=>@page.to_html(true, flash[:notice], session[:_csrf_token])
     else
       respond_with @page  
     end
