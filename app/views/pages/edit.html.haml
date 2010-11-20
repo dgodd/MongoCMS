@@ -23,5 +23,8 @@
     
       - @page.assets.each do |a|
         %div
-          = image_tag("/gridfs/#{a.oid}/#{a.filename}", :width=>100, 'data-textile'=>"!/gridfs/#{a.oid}(#{a.filename})!")
+          - if a.content_type=='application/pdf' then
+            = link_to a.filename, "/gridfs/#{a.oid}/#{a.filename}"
+          - else
+            = image_tag("/gridfs/#{a.oid}/#{a.filename}", :width=>100, 'data-textile'=>"!/gridfs/#{a.oid}(#{a.filename})!")
   
