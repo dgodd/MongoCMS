@@ -1,6 +1,13 @@
 // Place your application-specific JavaScript functions and classes here
 // This file is automatically included by javascript_include_tag :defaults
 $(function() {
+  $('div#accordion-west ul.sortable').sortable({
+    update: function(event,ui) {
+      
+    }
+  });
+  $('div#accordion-west ul.sortable').disableSelection();
+
   $('div#file-uploader').each(function(div) {
     var obj = this;
     var uploader = new qq.FileUploader({

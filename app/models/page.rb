@@ -16,6 +16,16 @@ class Page
   def body_html
     body.html_safe
   end
+  def form_fields ; form ? form.inputs.join(', ') : '' ; end
+  def form_fields=(inp)
+	arr = inp.to_s.split(/\s*,\s*/)
+	if arr.length>0 then
+		self.form ||= Form.new
+		self.form.inputs = inp.split(/\s*,\s*/)
+	else
+		self.form = nil
+	end
+  end
   def form_html(csrf_token=nil)
     return nil unless form && form.inputs.length>0
     html = "<form action='/contact' method='post' style='margin:1em 0;'><input type='hidden' name='authenticity_token' value='#{csrf_token}'><input name='contact[page_id]' value='#{self.id}' type='hidden'><table cellpadding='10' cellspacing='10' border='0'>"

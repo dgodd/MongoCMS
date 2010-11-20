@@ -45,19 +45,19 @@ $(this).ckeditor({ 'width':$(this.parentNode).width() });
 <%- if signed_in? -%>
 <div id="accordion-west" class="ui-layout-west no-scrollbar add-padding grey">
 <h3><a href="#">Sites: <%= curr_site %></a></h3>
-<div>
-<%- Site.all.each do |s| -%>
-<%= link_to s, edit_site_path(s) %>
+<div style="overflow-x:hidden;"><ul>
+<%- Site.order_by(:name).all.each do |s| -%>
+<li><%= link_to s, edit_site_path(s) %></li>
 <%- end -%>
-</div>
+</ul></div>
 <%- if curr_site -%>
 <h3><a href="#">Pages</a></h3>
-<div>
-<%- curr_site.pages.all.each do |p| -%>
-<%= link_to p, edit_page_path(p) %>
+<div style="overflow-x:hidden;"><ul class="sortable">
+<%- curr_site.pages.order_by(:position.asc,:name.asc).all.each do |p| -%>
+<li class="ui-state-default" data-oid="<%= p.id %>"><span class="ui-icon ui-icon-arrowthick-2-n-s"></span><%= link_to p, edit_page_path(p) %></li>
 <%- end -%>
 <%= link_to 'New page', new_page_path(:page=>{:site_id=>curr_site}) %>
-</div>
+</ul></div>
 <%- end -%>
 </div>
 <%- end -%>
