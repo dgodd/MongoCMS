@@ -10,6 +10,9 @@ class Page
   def to_s
     title? ? title : '(unknown)'
   end
+  def to_url
+    "/pages/#{self.id}"
+  end
   def body_html
     body.html_safe
   end

@@ -38,6 +38,19 @@ class SitesController < ApplicationController
     end  
     respond_with(@site, :location=>edit_site_path(@site))  
   end  
+
+  def add_asset
+    @site = Site.find(params[:id])
+    a = Asset.new(:filename=>params[:qqfile])
+    f = request.env['rack.input']
+    f.rewind
+    a.file = f
+    @site.assets << a
+    @site.save
+    # logger.warn request.env
+    ## https://github.com/valums/file-uploader/blob/master/server/perl.cgi
+    render :text=>'{ "success": true }'
+  end
     
   def destroy  
     @site = Site.find(params[:id])  

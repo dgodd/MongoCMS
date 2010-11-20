@@ -13,16 +13,17 @@
   %button.update
     = @site.new_record? ? 'Create' : 'Update'
 
-%div.ui-layout-east.ui-widget-content.add-padding.grey
-  %div#dropzone
-    %div#file-uploader
-      %noscript
-        %p Please enable JavaScript to use file uploader.
+- if @site.id
+  %div.ui-layout-east.ui-widget-content.add-padding.grey
+    %div#dropzone
+      %div#file-uploader{'rel'=>"/sites/#{@site.id}/add_asset"}
+        %noscript
+          %p Please enable JavaScript to use file uploader.
+    
+      - @site.assets.each do |a|
+        %div
+          - if a.content_type.to_s=='text/css'
+            = link_to a.filename, "/gridfs/#{a.oid}/#{a.filename}"
+          - else
+            = image_tag("/gridfs/#{a.oid}/#{a.filename}", :width=>100, 'data-textile'=>"!/gridfs/#{a.oid}(#{a.filename})!")
   
-    - @site.assets.each do |a|
-      %div
-        - if a.content_type.to_s=='text/css'
-          = link_to a.filename, "/gridfs/#{a.oid}/#{a.filename}"
-        - else
-          = image_tag("/gridfs/#{a.oid}/#{a.filename}", :width=>100, 'data-textile'=>"!/gridfs/#{a.oid}(#{a.filename})!")
-

@@ -1,5 +1,9 @@
 MongoCMS::Application.routes.draw do
-  resources :sites
+  resources :sites do
+    member do
+      post :add_asset
+    end
+  end
   resources :pages do
     member do
       post :add_asset

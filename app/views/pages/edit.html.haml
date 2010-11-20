@@ -12,13 +12,14 @@
   %button.update
     = @page.new_record? ? 'Create' : 'Update'
 
-%div.ui-layout-east.ui-widget-content.add-padding.grey
-  %div#dropzone
-    %div#file-uploader
-      %noscript
-        %p Please enable JavaScript to use file uploader.
+- if @page.id
+  %div.ui-layout-east.ui-widget-content.add-padding.grey
+    %div#dropzone
+      %div#file-uploader{'rel'=>"/pages/#{@page.id}/add_asset"}
+        %noscript
+          %p Please enable JavaScript to use file uploader.
+    
+      - @page.assets.each do |a|
+        %div
+          = image_tag("/gridfs/#{a.oid}/#{a.filename}", :width=>100, 'data-textile'=>"!/gridfs/#{a.oid}(#{a.filename})!")
   
-    - @page.assets.each do |a|
-      %div
-        = image_tag("/gridfs/#{a.oid}/#{a.filename}", :width=>100, 'data-textile'=>"!/gridfs/#{a.oid}(#{a.filename})!")
-

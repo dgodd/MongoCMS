@@ -13,6 +13,6 @@ class Site
   def domains_txt ; domains.join(' ') ; end
   def domains_txt=(inp) ; domains = inp.to_s.split(/\s+/) ; end
   def to_liquid
-    { 'name'=>name, :domain=>domains.first }
+    { 'name'=>name, 'domain'=>domains.first, 'pages'=>lambda { pages.collect { |p| { 'title'=>p.title, 'url'=>p.to_url } } } }
   end
 end

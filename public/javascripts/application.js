@@ -2,13 +2,15 @@
 // This file is automatically included by javascript_include_tag :defaults
 $(function() {
   $('div#file-uploader').each(function(div) {
+    var obj = this;
     var uploader = new qq.FileUploader({
       // pass the dom node (ex. $(selector)[0] for jQuery users)
-      element: document.getElementById('file-uploader'),
+      element: obj,
       // path to server-side upload script
-      action: '/pages/4cddde0d9a779b3e3f000008/add_asset'
+      action: $(obj).attr('rel')
     })
   });
+/*`
   $('td#dropzone img').draggable({ appendTo: "body", helper: "clone" });
   $('textarea').droppable({ drop: function(e,ui) {
     var img = ui.draggable.data('textile');
@@ -17,6 +19,7 @@ $(function() {
       $(this).focus();
     }
   }});
+*/
   $('button.update').live('click', function() {
     $(this.parentNode.parentNode).find('form:first').submit();
   });
