@@ -1,6 +1,7 @@
 %div.ui-layout-center.ui-widget-content.add-padding.grey.add-scrollbar
   %div{:style=>'text-align:right'}
     = link_to 'Show', @page, :target=>'_blank'
+    = link_to 'Delete', @page, :confirm => 'Are you sure?', :method => :delete
   
   = semantic_form_for @page do |f|
     = f.inputs do

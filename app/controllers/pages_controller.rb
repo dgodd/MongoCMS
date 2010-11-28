@@ -82,6 +82,6 @@ class PagesController < ApplicationController
     @page = Page.find(params[:id])  
     @page.destroy  
     flash[:notice] = "Successfully destroyed page."  
-    respond_with(@page)  
+    respond_with(@page, :location=>"/sites/#{@page.site.id}/edit") 
   end  
 end  
