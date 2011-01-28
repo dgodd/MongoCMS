@@ -52,12 +52,20 @@ $(this).ckeditor({ 'width':$(this.parentNode).width() });
 </ul></div>
 <%- if curr_site -%>
 <h3><a href="#">Pages</a></h3>
-<div style="overflow-x:hidden;"><ul class="sortable">
-<%- curr_site.pages.order_by(:position.asc,:name.asc).all.each do |p| -%>
-<li class="ui-state-default" id="pages_<%= p.id %>"><span class="ui-icon ui-icon-arrowthick-2-n-s"></span><%= link_to p, edit_page_path(p) %></li>
+<div style="overflow-x:hidden;"><ul class="sortable" style="max-height:320px;">
+<%- curr_site.pages.where(:parent_id=>nil).order_by(:position.asc,:name.asc).all.each do |p| -%>
+<li class="ui-state-default" id="pages_<%= p.id %>" style="height:auto;"><span class="ui-icon ui-icon-arrowthick-2-n-s"></span>
+  <%= link_to p, edit_page_path(p) %>
+  <%- if p.children? -%>
+    <%- p.children.each do |c| -%>
+      <div><%= link_to c, edit_page_path(c) %></div>
+    <%- end -%>
+  <%- end -%>
+</li>
 <%- end -%>
+</ul>
 <%= link_to 'New page', new_page_path(:page=>{:site_id=>curr_site}) %>
-</ul></div>
+</div>
 <%- end -%>
 </div>
 <%- end -%>

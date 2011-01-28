@@ -1,6 +1,6 @@
 source 'http://rubygems.org'
 
-gem 'rails', '3.0.1'
+gem 'rails', '3.0.3'
 
 # Deploy with Capistrano
 # gem 'capistrano'
@@ -14,6 +14,7 @@ gem "jquery-rails", "0.2.4"
 gem "RedCloth"
 gem "formtastic"
 gem "liquid"
+gem 'newrelic_rpm'
 
 # Bundle gems needed for Mongoid
 gem "mongoid", "2.0.0.beta.19"

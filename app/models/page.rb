@@ -1,12 +1,18 @@
 class Page
   include Mongoid::Document
   field :title
+  field :slugs, :type=>Array
   field :position, :type=>Integer
+  field :parent_id, :type=>BSON::ObjectId
+  def parent ; Page.find(parent_id) if parent_id ; end
+  def children ; Page.where(:parent_id=>self.id).order_by(:position.asc,:name.asc) ; end
+  def children? ; children.count>0 ; end
   field :published, :type=>Boolean
   field :body
   embeds_many :assets
   embeds_one :form
   referenced_in :site
+  referenced_in :template
 
   def to_s
     title? ? title : '(unknown)'
@@ -29,13 +35,7 @@ class Page
   end
   def form_html(csrf_token=nil)
     return nil unless form && form.inputs.length>0
-    html = "<form action='/contact' method='post' style='margin:1em 0;'><input type='hidden' name='authenticity_token' value='#{csrf_token}'><input name='contact[page_id]' value='#{self.id}' type='hidden'><table cellpadding='10' cellspacing='10' border='0'>"
-    form.inputs.each do |n|
-      html += "<tr><th style='text-align:right;'>#{n}</th><td><input type='text' name='contact[#{n}]'></td></tr>"
-    end
-    html += "<tr><th>&nbsp;</th><td><input type='submit' value='Send'></td></tr>"
-    html += "</table></form>"
-    html
+    form.to_html(csrf_token)
   end
   def to_drop
     pd = PageDrop.new
@@ -46,6 +46,10 @@ class Page
     pd = self.to_drop
     mid = Liquid::Template.parse(self.layout).render('page'=>pd, 'notice'=>notice)
     mid += self.form_html(csrf_token).to_s.html_safe
+    if children? || (parent && parent.children?) then
+      pages = (children? ? children : parent.children)
+      mid = "<div id='sublinks'>" + pages.collect { |p| "<a href='#{p.to_url}'>#{p}</a>" }.join('')  + "<div style='clear:both;'<!-- --></div></div>" + mid
+    end
     if layout then
       Liquid::Template.parse(self.site.layout).render('page'=>pd, 'notice'=>notice, 'site'=>self.site, 'yield'=>mid)
     else

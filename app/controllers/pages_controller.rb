@@ -1,6 +1,6 @@
 class PagesController < ApplicationController  
   respond_to :html, :xml, :json  
-  load_and_authorize_resource :except=>[:root]
+  load_and_authorize_resource :except=>[:root,:show]
     
   def index  
     @pages = Page
@@ -10,7 +10,8 @@ class PagesController < ApplicationController
   end  
     
   def show  
-    @page ||= Page.find(params[:id])  
+    id = BSON::ObjectId(params[:id]) rescue id = params[:id]
+    @page ||= Page.any_of({:_id=>id}, {:slugs=>params[:id]}).first
 
     if false && @page.site && dom=@page.site.domains.first then
       unless request.host==dom || request.host=="www.#{dom}" then
@@ -20,13 +21,13 @@ class PagesController < ApplicationController
 
     if @page.site && @page.site.layout.present? then
       session[:_csrf_token] ||= ActiveSupport::SecureRandom.base64(32) if @page.form
-      render :text=>@page.to_html(true, flash[:notice], session[:_csrf_token])
+      render :text=>@page.to_html(!request.xhr?, flash[:notice], session[:_csrf_token])
     else
       respond_with @page  
     end
   end  
   def root
-    @page = Page.where(:site_id=>current_site.id).first
+    @page = Page.where(:site_id=>current_site.id, :published=>true).asc(:position).first
     show
   end
   
