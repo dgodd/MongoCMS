@@ -71,10 +71,16 @@ class PagesController < ApplicationController
     render :text=>'{ "success": true }'
   end
   def positions
-    params[:pages].each_with_index do |id,idx|
+    # render :text=>params.to_yaml and return
+    parent = params[:parent] && params[:parent].to_s!='root' ? Page.find(params[:parent]) : nil
+    params[:order] = params[:order].values if params[:order].respond_to?(:values)
+    params[:order].each_with_index do |id,idx|
       p = Page.find(id)
-      p.position = idx
-      p.save
+      if p then
+        p.parent_id = parent ? parent.id : nil
+        p.position = idx
+        p.save
+      end
     end
     render :text=>'OK'
   end

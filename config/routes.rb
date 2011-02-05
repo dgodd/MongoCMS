@@ -6,7 +6,7 @@ MongoCMS::Application.routes.draw do
   end
   resources :pages do
     member do
-      post :add_asset
+      post :add_asset, :positions
     end
     collection do
       post :positions

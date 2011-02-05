@@ -1,0 +1,5 @@
+ul.treesort.dragging li { margin-top:0px; margin-bottom:0px; }
+ul.treesort li { margin-top:12px; margin-bottom:12px; }
+ul.treesort li.extra { list-style:none; background:#eee; height:12px; margin-top:0; margin-bottom:0; }
+ul.treesort li.drophover { color:red; }
+ul.treesort li.extra.drophover { background:red; }

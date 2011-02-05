@@ -6,7 +6,6 @@
   = semantic_form_for @page do |f|
     = f.inputs do
       = f.hidden_field :site_id
-      = f.input :parent_id, :as=>:select, :collection=>Page.where(:site_id=>@page.site_id, :parent_id=>nil).order_by(:position.asc,:name.asc)
       = f.input :published, :as=>:select
       = f.input :title
       = f.input :form_fields
