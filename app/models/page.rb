@@ -42,13 +42,18 @@ class Page
     pd.page = self
     pd
   end
+  def breadcrumb_html(link=false)
+    out = parent ? parent.breadcrumb_html(true) : ''
+    out + " &raquo; ".html_safe + (link ? "<a href='#{self.to_url}'>#{self}</a>" : self.to_s)
+  end
   def to_html(layout=true,notice=nil,csrf_token=nil)
     pd = self.to_drop
     mid = Liquid::Template.parse(self.layout).render('page'=>pd, 'notice'=>notice)
     mid += self.form_html(csrf_token).to_s.html_safe
     if children? || (parent && parent.children?) then
       pages = (children? ? children : parent.children)
-      mid = "<div id='sublinks'>" + pages.collect { |p| "<a href='#{p.to_url}'>#{p}</a>" }.join('')  + "<div style='clear:both;'<!-- --></div></div>" + mid
+      mid = "<div id='sublinks'>" + pages.collect { |p| "<a href='#{p.to_url}'>#{p}</a>" }.join('')  + "<div style='clear:both;'<!-- --></div></div>" + mid if pages.length>1 || pages[0]!=self
+      mid = "<div>#{breadcrumb_html}</div>" + mid if parent
     end
     if layout then
       Liquid::Template.parse(self.site.layout).render('page'=>pd, 'notice'=>notice, 'site'=>self.site, 'yield'=>mid)
