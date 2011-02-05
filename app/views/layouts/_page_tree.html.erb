@@ -1,0 +1,10 @@
+<%- pages.each do |p| -%>
+<li rel="<%= p.id %>">
+  <%= link_to p, edit_page_path(p), :class=>(p.published ? 'published' : 'notpublished') %>
+  <%- if p.children? -%>
+    <ul>
+      <%= render :partial=>'layouts/page_tree', :locals=>{ :pages => p.children } %>
+    </ul>
+  <%- end -%>
+</li>
+<%- end -%>

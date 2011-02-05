@@ -27,21 +27,20 @@ $(document).ready(function(){
 		var oldParent = dropped.parent();
 		var branch = false;
 		if(me.hasClass('extra')) {
-			branch = me.parents('ul:first');
+			branch = me.parent();
 			me.after(dropped);
 		} else {
-			branch = me.children("ul");
+			branch = me.children("ul:first");
 			if(branch.size() == 0) {
 				branch = $('<ul>');
-				branch.attr('rel', me.attr('rel'));
 				me.append(branch);
 			}
-            		branch.eq(0).append(dropped);
+            		branch.append(dropped);
 		}
 		var oldBranches = $("li", oldParent);
 		if (oldBranches.size() == 0) { $(oldParent).remove(); }
 		if(branch) {
-			var hash = { 'parent':branch.attr('rel'), 'order':branch.children('li').map(function() { return $(this).attr('rel') }) };
+			var hash = { 'parent':branch.parent().attr('rel'), 'order':branch.children('li').map(function() { return $(this).attr('rel') }).toArray() };
 			$.post('/pages/positions', hash);
 		}
 	}
