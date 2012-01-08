@@ -1,13 +1,14 @@
 development:
   host: localhost
-  database: mongo_cms
+  database: mongocms
 
 test:
   host: localhost
-  database: mongo_cms_test
+  database: mongocms_test
 
 # set these environment variables on your prod server
 production:
   uri: <%= ENV['MONGOHQ_URL'] %>
   #host: localhost
-  #database: mongo_cms
+  #database: mongocms
+  #uri: "mongodb://heroku:a100c51a1aeddacc08174d4c7facfe1c@staff.mongohq.com:10027/app2392207"

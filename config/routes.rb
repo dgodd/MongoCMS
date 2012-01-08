@@ -1,4 +1,6 @@
 MongoCMS::Application.routes.draw do
+  mount Rack::GridFS::Endpoint.new(:db => Mongoid.database), :at => "gridfs", :lookup => :path
+
   resources :sites do
     member do
       post :add_asset

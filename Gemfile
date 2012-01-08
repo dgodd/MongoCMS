@@ -7,9 +7,6 @@ gem 'rails', '3.0.3'
 
 # Bundle gems needed for Haml
 gem "haml", "3.0.22"
-gem "haml-rails", "0.3.4", :group => :development
-gem "hpricot", "0.8.2", :group => :development
-gem "ruby_parser", "2.0.5", :group => :development
 gem "jquery-rails", "0.2.4"
 gem "RedCloth", '>= 4.2.9'
 gem "formtastic"
@@ -19,6 +16,7 @@ gem "liquid"
 gem "mongoid", ">= 2.0.0"
 gem "bson_ext", ">= 1.3.1"
 gem "mongoid_grid"
+gem 'rack-gridfs'
 
 # Auth
 gem "omniauth"
