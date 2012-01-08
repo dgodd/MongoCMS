@@ -1,20 +1,13 @@
-defaults: &defaults
-  host: localhost
-  # slaves:
-  #   - host: slave1.local
-  #     port: 27018
-  #   - host: slave2.local
-  #     port: 27019
-
 development:
-  <<: *defaults
+  host: localhost
   database: mongo_cms
 
 test:
-  <<: *defaults
+  host: localhost
   database: mongo_cms_test
 
 # set these environment variables on your prod server
 production:
-  <<: *defaults
-  database: mongo_cms
+  uri: <%= ENV['MONGOHQ_URL'] %>
+  #host: localhost
+  #database: mongo_cms
