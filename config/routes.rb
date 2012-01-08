@@ -1,5 +1,5 @@
 MongoCMS::Application.routes.draw do
-  mount Rack::GridFS::Endpoint.new(:db => Mongoid.database, :mapper => lambda { |path| %r!^/gridfs/([^/]+)!.match(path)[1] }), :at => "gridfs"
+  mount Rack::GridFS::Endpoint.new(:db => Mongoid.database, :mapper => lambda { |path| %r!^/([^/]+)!.match(path)[1] }), :at => "gridfs"
 
   resources :sites do
     member do
