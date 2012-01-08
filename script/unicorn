@@ -1,0 +1,6 @@
+#!/bin/sh
+export PATH=/usr/local/rvm/bin:$PATH
+[[ -s "/usr/local/lib/rvm" ]] && source "/usr/local/lib/rvm"  # This loads RVM into a shell session.
+
+cd /home/www/mongocms && bundle exec unicorn -c config/unicorn.rb -D -E production
+

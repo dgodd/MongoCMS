@@ -1,6 +1,7 @@
 source 'http://rubygems.org'
 
 gem 'rails', '3.0.3'
+gem 'unicorn'
 
 # Deploy with Capistrano
 # gem 'capistrano'
@@ -17,8 +18,8 @@ gem "liquid"
 gem 'newrelic_rpm'
 
 # Bundle gems needed for Mongoid
-gem "mongoid", "2.0.0.beta.19"
-gem "bson_ext", "1.1.2"
+gem "mongoid", ">= 2.0.0"
+gem "bson_ext", ">= 1.3.1"
 gem "mongoid_grid"
 
 # Auth

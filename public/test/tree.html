@@ -1,0 +1,98 @@
+<html>
+<head>
+<script src="/javascripts/jquery.js"></script>
+<script src="/javascripts/jquery-ui.js"></script>
+<script>
+function parseTree(ul){
+    var tags = [];
+    ul.children("li").each(function(){
+        var subtree =    $(this).children("ul");
+        if(subtree.size() > 0)
+            tags.push([$(this).attr("id"), parseTree(subtree)]);
+        else
+            tags.push($(this).attr("id"));
+    });
+    return tags;
+}
+ 
+$(document).ready(function(){
+        
+    var treeSortDrop = {
+	scope: 'treesort',
+        tolerance        : "pointer",
+        hoverClass        : "tree_hover",
+	greedy: true,
+	hoverClass: 'drophover',
+        drop            : function(event, ui){
+            var dropped = ui.draggable;
+            dropped.css({top: 0, left: 0});
+            var me = $(this);
+            if(me == dropped)
+                return;
+            var subbranch = $(me).children("ul");
+            if(subbranch.size() == 0) {
+                me.append("<ul></ul>");
+                subbranch = me.find("ul");
+            }
+            var oldParent = dropped.parent();
+		if(me.hasClass('extra')) {
+			me.after(dropped);
+		} else {
+            		subbranch.eq(0).append(dropped);
+		}
+            var oldBranches = $("li", oldParent);
+            if (oldBranches.size() == 0) { $(oldParent).remove(); }
+	}
+    };
+    
+    $("ul.treesort li:not(.extra)").droppable(treeSortDrop);
+    $("ul.treesort li:not(.extra)").draggable({
+	scope: 'treesort',
+        opacity: 0.5,
+        revert: true,
+	start: function(event,ui) {
+		$('ul.treesort').addClass('dragging');
+		$("ul.treesort li:not(.extra)").before('<li class="extra"><!-- --></li>');
+		$("ul.treesort li.extra").droppable(treeSortDrop);
+	},
+	stop: function(event,ui) {
+		$('ul.treesort li.extra').remove();
+		$('ul.treesort').removeClass('dragging');
+	}
+    });
+
+    
+    $("#save").click(function(){
+        /*
+        var tree = $.toJSON(parseTree($("#tag_tree")));
+        $.post("@saveTags", {tags: tree}, function(res){
+            $("#printOut").html(res);
+        });
+        */
+        $.debug.print_r(parseTree($("#tag_tree")), "printOut", false);
+    });
+});
+</script>
+<style>
+ul.treesort.dragging li { margin-top:0px; margin-bottom:0px; }
+ul.treesort li { margin-top:12px; margin-bottom:12px; }
+ul.treesort li.extra { list-style:none; background:#eee; height:12px; margin-top:0; margin-bottom:0; }
+ul.treesort li.drophover { color:red; }
+ul.treesort li.extra.drophover { background:red; }
+</style>
+</head>
+<body>
+<ul class="treesort">
+<li>bob 1</li>
+<li>bob 2</li>
+<li>bob 3</li>
+<li>bob 4</li>
+<li>bob 5</li>
+<li>bob 6</li>
+<li>bob 7</li>
+<li>bob 8</li>
+<li>bob 9</li>
+<li>bob 10</li>
+</ul>
+</body>
+</html>
