@@ -4,6 +4,7 @@ gem 'rails', '3.0.3'
 
 # Deploy with Capistrano
 # gem 'capistrano'
+gem 'thin'
 
 # Bundle gems needed for Haml
 gem "haml", "3.0.22"
@@ -21,8 +22,3 @@ gem 'rack-gridfs'
 # Auth
 gem "omniauth"
 gem "cancan"
-
-## Dev
-group :development do
-  gem 'thin'
-end
