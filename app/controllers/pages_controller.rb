@@ -1,17 +1,17 @@
-class PagesController < ApplicationController  
-  respond_to :html, :xml, :json  
+class PagesController < ApplicationController
+  respond_to :html, :xml, :json
   load_and_authorize_resource :except=>[:root,:show]
-    
-  def index  
+
+  def index
     @pages = Page
     @pages = @pages.where(:site_id=>params[:site_id]) if params[:site_id]
     @pages = @pages.all
     respond_with @pages
-  end  
-    
-  def show  
+  end
+
+  def show
     id = BSON::ObjectId(params[:id]) rescue id = params[:id]
-    @page ||= Page.any_of({:_id=>id}, {:slugs=>params[:id]}).first
+    @page ||= Page.any_of({:_id=>id}, {:slug=>params[:id]}).first
 
     if false && @page.site && dom=@page.site.domains.first then
       unless request.host==dom || request.host=="www.#{dom}" then
@@ -23,40 +23,40 @@ class PagesController < ApplicationController
       session[:_csrf_token] ||= ActiveSupport::SecureRandom.base64(32) if @page.form
       render :text=>@page.to_html(!request.xhr?, flash[:notice], session[:_csrf_token])
     else
-      respond_with @page  
+      respond_with @page
     end
-  end  
+  end
   def root
     @page = Page.where(:site_id=>current_site.id, :published=>true).asc(:position).first
     show
   end
-  
-  def new  
+
+  def new
     @page = Page.new(params[:page])
-    respond_with @page  
-  end  
-    
-  def create  
-    @page = Page.new(params[:page])  
-    if @page.save  
-      #cookies[:last_page_id] = @page.id  
-      flash[:notice] = "Successfully created page."  
-    end  
-    respond_with(@page, :location=>edit_page_path(@page))  
-  end  
-  
-  def edit  
-    @page = Page.find(params[:id])  
-    respond_with(@page)  
-  end  
-  
-  def update  
-    @page = Page.find(params[:id])  
-    if @page.update_attributes(params[:page])  
-      flash[:notice] = "Successfully updated page."  
-    end  
-    respond_with(@page, :location=>edit_page_path(@page))  
-  end  
+    respond_with @page
+  end
+
+  def create
+    @page = Page.new(params[:page])
+    if @page.save
+      #cookies[:last_page_id] = @page.id
+      flash[:notice] = "Successfully created page."
+    end
+    respond_with(@page, :location=>edit_page_path(@page))
+  end
+
+  def edit
+    @page = Page.find(params[:id])
+    respond_with(@page)
+  end
+
+  def update
+    @page = Page.find(params[:id])
+    if @page.update_attributes(params[:page])
+      flash[:notice] = "Successfully updated page."
+    end
+    respond_with(@page, :location=>edit_page_path(@page))
+  end
 
   def add_asset
     @page = Page.find(params[:id])
@@ -83,11 +83,11 @@ class PagesController < ApplicationController
     end
     render :text=>'OK'
   end
-    
-  def destroy  
-    @page = Page.find(params[:id])  
-    @page.destroy  
-    flash[:notice] = "Successfully destroyed page."  
-    respond_with(@page, :location=>"/sites/#{@page.site.id}/edit") 
-  end  
-end  
+
+  def destroy
+    @page = Page.find(params[:id])
+    @page.destroy
+    flash[:notice] = "Successfully destroyed page."
+    respond_with(@page, :location=>"/sites/#{@page.site.id}/edit")
+  end
+end

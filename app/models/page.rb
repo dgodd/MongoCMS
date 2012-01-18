@@ -1,7 +1,7 @@
 class Page
   include Mongoid::Document
   field :title
-  field :slugs, :type=>Array
+  field :slug, :type=>String
   field :position, :type=>Integer
   field :parent_id, :type=>BSON::ObjectId
   def parent ; Page.find(parent_id) if parent_id ; end
@@ -14,11 +14,16 @@ class Page
   referenced_in :site
   referenced_in :template
 
+  before_create :generate_slug
+
   def to_s
     title? ? title : '(unknown)'
   end
+  def generate_slug
+    self.slug ||= title.downcase.gsub(/[^a-z0-9]/,' ').squish.gsub(/\s/,'-')
+  end
   def to_url
-    "/pages/#{self.id}"
+    slug.present? ? "/pages/#{self.slug}" : "/pages/#{self.id}"
   end
   def body_html
     body.html_safe
