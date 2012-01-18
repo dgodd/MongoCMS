@@ -1,4 +1,5 @@
 $(function() {
+  var wrapWidth;
 	var fcenter = function() {
 		var h = $(window).height();
 		if(h>670) {
@@ -15,9 +16,11 @@ $(function() {
 
 		var w = $(window).width();
 		if(w > 940) {
+      wrapWidth = (w - 30) + 'px';
 			$('div#wrap2, div#wrapper').css('width', (w - 30));
 			$('div#content').css('width', (w - 30 - 480));
 		} else {
+      wrapWidth = '910px';
 			$('div#wrap2, div#wrapper').css('width', 910)
 			$('div#content').css('width', 430);
 		}
@@ -33,20 +36,37 @@ $(function() {
 		a.stop(false,false).animate({ 'opacity':0 }, 200,
 			function() { a.removeClass('hover') }).animate({ 'opacity':1 }, 200);
 	});
-	$('div#nav ul li a').live('click', function() {
-		var wrap = $('#wrapper');
-		var a = $(this);
-		var limg = a.attr('rel');
-		$('div#nav ul li a').removeClass('curr');
-		a.addClass('curr');
-		var cwidth = wrap.width()+'px';
-		wrap.animate({ 'width':'230px' }, function() {
-			if(limg) $('div#limg').css({ 'background-image':'url('+limg+')' });
-		});
-		$('div#content').load(a.attr('href'), function() {
-			wrap.animate({ 'width':cwidth });
-		});
-		return false;
-	});
+
+
+  var wrap = $('#wrapper');
+  if($.support.pjax) {
+    $('a').pjax('#content').live('click', function(){
+      var a = $(this);
+      if(a.parents('div#nav')[0]) {
+        $('div#nav ul li a').removeClass('curr');
+        a.addClass('curr');
+      }
+      return false;
+    });
+    $('#content').bind('pjax:start', function() { $('#content').css({ 'opacity': 0.2 }); });
+    $('#content').bind('pjax:end', function() { $('#content').css({ 'opacity': 1.0 }); });
+  } else {
+    $('div#nav ul li a').live('click', function() {
+      var a = $(this);
+      var limg = a.attr('rel');
+      $('div#nav ul li a').removeClass('curr');
+      a.addClass('curr');
+      var cwidth = wrap.width()+'px';
+      wrap.animate({ 'width':'230px' }, function() {
+        if(limg) $('div#limg').css({ 'background-image':'url('+limg+')' });
+      });
+      $('div#content').load(a.attr('href'), function() {
+        wrap.animate({ 'width':cwidth });
+      });
+      return false;
+    });
+  }
+
+
 });
 
