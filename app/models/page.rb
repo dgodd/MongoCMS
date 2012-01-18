@@ -51,7 +51,7 @@ class Page
     mid = Liquid::Template.parse(self.layout).render('page'=>pd, 'notice'=>notice)
     mid += self.form_html(csrf_token).to_s.html_safe
     if children? || (parent && parent.children?) then
-      pages = (children? ? children : parent.children)
+      pages = (children? ? children : parent.children).where(published:true)
       mid = "<div id='sublinks'>" + pages.collect { |p| "<a href='#{p.to_url}'>#{p}</a>" }.join('')  + "<div style='clear:both;'<!-- --></div></div>" + mid if pages.length>1 || pages[0]!=self
       mid = "<div>#{breadcrumb_html}</div>" + mid if parent
     end
