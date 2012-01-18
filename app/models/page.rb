@@ -62,6 +62,6 @@ class Page
     end
   end
   def layout
-    "<h1>{{page.title}}</h1><div>{{page.body}}</div>"
+    "<title>#{site.name} - {{page.title}}</title><h1>{{page.title}}</h1><div>{{page.body}}</div>"
   end
 end
