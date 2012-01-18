@@ -21,3 +21,8 @@ gem 'rack-gridfs'
 # Auth
 gem "omniauth"
 gem "cancan"
+
+## Dev
+group :development do
+  gem 'thin'
+end

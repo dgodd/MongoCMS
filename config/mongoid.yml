@@ -1,10 +1,10 @@
 development:
   host: localhost
-  database: mongocms
+  database: lypc
 
 test:
   host: localhost
-  database: mongocms_test
+  database: lypc_test
 
 # set these environment variables on your prod server
 production:
