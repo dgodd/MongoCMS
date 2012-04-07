@@ -22,3 +22,5 @@ gem 'rack-gridfs'
 # Auth
 gem "omniauth"
 gem "cancan"
+
+gem 'heroku', group: :development
