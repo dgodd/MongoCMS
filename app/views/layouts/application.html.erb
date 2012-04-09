@@ -2,22 +2,23 @@
 <html>
 <head>
   <title>MongoCMS</title>
-  <%= stylesheet_link_tag :all %>
-  <%= javascript_include_tag :defaults, 'fileuploader', 'jquery.layout.min-1.2.0', 'jquery.tree' %>
+    <%= csrf_meta_tags %>
+    <%= stylesheet_link_tag "application", :media => "all" %>
+<%= javascript_include_tag "application" %>
 <script type="text/javascript" src="/ckeditor/ckeditor.js"></script>
 <script type="text/javascript" src="/ckeditor/adapters/jquery.js"></script>
-<script type="text/javascript"> 
-	var pageLayout, centerTabsLayout, centerAccordionLayout; 
-$(function() { 
+<script type="text/javascript">
+	var pageLayout, centerTabsLayout, centerAccordionLayout;
+$(function() {
 		// OUTER/PAGE LAYOUT
-		pageLayout = $("body").layout({ 
+		pageLayout = $("body").layout({
 			west__size:200
 		,	east__size:200
 		,	south__initClosed:true
 		,	north__initClosed:true
 		,	west__onresize:	function () { $("#accordion-west").accordion("resize"); }
 		,	east__onresize:	function () { if ($("#tabs-east").tabs('option', 'selected') == 1) $("#accordion-east").accordion("resize"); }
-		}); 
+		});
 		$('body > div.ui-layout-center').layout({
 			east__size:130
 		});
@@ -33,11 +34,9 @@ $( 'textarea.editor, textarea#page_body' ).each(function() {
 $(this).ckeditor({ 'width':$(this.parentNode).width() });
  });
  });
-	</script> 
-    
-  <%= csrf_meta_tag %>
-</head> 
-<body> 
+	</script>
+</head>
+<body>
 
 <%- curr_site = @page ? @page.site : @site -%>
 <div class="ui-layout-north ui-widget-content add-padding"><%= curr_site %> - User: <%= current_user %> - <%= link_to 'Logout', '/admin/logout' %></div>
@@ -64,19 +63,5 @@ $(this).ckeditor({ 'width':$(this.parentNode).width() });
 <div id="tabs-center" class="ui-layout-center no-scrollbar grey no-padding">
 <%= yield %>
 </div>
-
-<script type="text/javascript">
-  var _gauges = _gauges || [];
-  (function() {
-    var t   = document.createElement('script');
-    t.type  = 'text/javascript';
-    t.async = true;
-    t.id    = 'gauges-tracker';
-    t.setAttribute('data-site-id', '4e0a9973613f5d0c03000001');
-    t.src = '//secure.gaug.es/track.js';
-    var s = document.getElementsByTagName('script')[0];
-    s.parentNode.insertBefore(t, s);
-  })();
-</script>
-</body> 
+</body>
 </html>
