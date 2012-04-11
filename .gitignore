@@ -5,3 +5,4 @@ tmp/**/*
 .DS_Store
 dump/
 dump.old/
+public/assets
