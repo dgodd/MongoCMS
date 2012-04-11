@@ -15,8 +15,8 @@ gem "liquid"
 gem 'uglifier'
 
 # Bundle gems needed for Mongoid
-gem "mongoid", ">= 2.0.0"
-gem "bson_ext", ">= 1.3.1"
+gem "mongoid", require: false
+gem "bson_ext"
 gem "mongoid_grid"
 gem 'rack-gridfs'
 

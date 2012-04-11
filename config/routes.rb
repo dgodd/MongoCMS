@@ -1,5 +1,7 @@
 MongoCMS::Application.routes.draw do
-  mount Rack::GridFS::Endpoint.new(:db => Mongoid.database, :mapper => lambda { |path| %r!^/([^/]+)!.match(path)[1] }), :at => "gridfs"
+  if YAML.load(ERB.new(File.read('config/mongoid.yml')).result)[Rails.env].values.flatten.any?
+    mount Rack::GridFS::Endpoint.new(:db => Mongoid.database, :mapper => lambda { |path| %r!^/([^/]+)!.match(path)[1] }), :at => "gridfs"
+  end
 
   resources :sites do
     member do

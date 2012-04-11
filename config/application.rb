@@ -24,6 +24,10 @@ if defined?(Bundler)
   # Bundler.require(:default, :assets, Rails.env)
 end
 
+if YAML.load(ERB.new(File.read('config/mongoid.yml')).result)[Rails.env].values.flatten.any?
+  require 'mongoid'
+end
+
 module MongoCMS
   class Application < Rails::Application
     # Settings in config/environments/* take precedence over those specified here.
