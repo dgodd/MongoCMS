@@ -11,7 +11,7 @@ class PagesController < ApplicationController
 
   def show
     id = BSON::ObjectId(params[:id]) rescue id = params[:id]
-    @page ||= Page.any_of({:_id=>id}, {:slug=>params[:id]}).first
+    @page ||= Page.any_of({:_id=>id}, {:site_id=>current_site.id, :slug=>params[:id]}).first
 
     if false && @page.site && dom=@page.site.domains.first then
       unless request.host==dom || request.host=="www.#{dom}" then
