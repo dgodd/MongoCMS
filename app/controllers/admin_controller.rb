@@ -10,15 +10,18 @@ class AdminController < ApplicationController
   def callback
     auth = request.env['omniauth.auth']
     @user = User.find_or_create_by(:provider=>auth['provider'], :uid=>auth['uid'])
-    @user.name = auth['user_info']['name'] rescue 1
-    @user.email = auth['extra']['user_hash']['email'] rescue 1
+    # @user.name = auth['user_info']['name'] rescue ''
+    # @user.email = auth['extra']['user_hash']['email'] rescue 1
+    @user.name = auth['info']['name'] rescue ''
+    @user.email = auth['info']['email'] rescue ''
     @user.save
 
     Rails.logger.error auth.to_json
+    Rails.logger.error @user.to_json
     # render :text=>auth.to_yaml and return
     # render :text=>"Hello, #{@user.name}"
 
-    if ['catherine@liveyourpassion.com.au', ''].include?(@user.email)
+    if ['catherine@liveyourpassion.com.au', 'dave@goddard.id.au'].include?(@user.email)
       self.current_user = @user
       redirect_to sites_path
     else
