@@ -14,7 +14,8 @@ class AdminController < ApplicationController
     @user.email = auth['extra']['user_hash']['email'] rescue 1
     @user.save
 
-    render :text=>auth.to_yaml and return
+    Rails.logger.error auth.to_json
+    # render :text=>auth.to_yaml and return
     # render :text=>"Hello, #{@user.name}"
 
     if ['catherine@liveyourpassion.com.au', ''].include?(@user.email)
