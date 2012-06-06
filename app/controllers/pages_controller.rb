@@ -20,7 +20,7 @@ class PagesController < ApplicationController
     end
 
     if @page.site && @page.site.layout.present? then
-      session[:_csrf_token] ||= ActiveSupport::SecureRandom.base64(32) if @page.form
+      session[:_csrf_token] ||= SecureRandom.base64(32) if @page.form
       render :text=>@page.to_html(!request.xhr?, flash[:notice], session[:_csrf_token])
     else
       respond_with @page
