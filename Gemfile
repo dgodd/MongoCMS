@@ -26,3 +26,5 @@ gem 'omniauth-facebook'
 gem "cancan"
 
 gem 'heroku', group: :development
+gem 'newrelic_rpm'
+
